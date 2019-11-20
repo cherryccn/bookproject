@@ -36,5 +36,9 @@ dependencies {
     //Butterknife
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    //android-async-http网络库
     implementation 'com.loopj.android:android-async-http:1.4.10'
+    //recyclerview
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BookProject</string>
+    <string name="book_list_name">书籍列表</string>
 </resources>

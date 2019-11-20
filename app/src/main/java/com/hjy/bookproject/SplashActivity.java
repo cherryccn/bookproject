@@ -1,8 +1,10 @@
 package com.hjy.bookproject;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,15 +14,17 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends Activity {
 
     public static final int CODE = 1001;
     public static final int TOTAL_TIME = 3000;
-    public static final int INTEVAL_TIME = 1000;
+    public static final int INTERVAL_TIME = 1000;
 
     @BindView(R.id.tv_time)
     TextView tvTime;
+    private MyHandle myHandle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +32,28 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
-        MyHandle myHandle = new MyHandle(this);
+        myHandle = new MyHandle(this);
         Message message = Message.obtain();
         message.what = CODE;
         message.arg1 = TOTAL_TIME;
         myHandle.sendMessage(message);
     }
 
+
+    @OnClick(R.id.tv_time)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_time:
+                BookListActivity.startActivity(SplashActivity.this);
+                SplashActivity.this.finish();
+                if (myHandle != null) {
+                    myHandle.removeMessages(CODE);
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     public static class MyHandle extends Handler {
 
@@ -54,20 +73,22 @@ public class SplashActivity extends AppCompatActivity {
                 if (activity != null) {
                     //设置textview，更新ui；
                     int time = msg.arg1;
-                    activity.tvTime.setText(time / INTEVAL_TIME + "秒，点击跳过");
+                    activity.tvTime.setText(time / INTERVAL_TIME + "秒，点击跳过");
                     //发送倒计时
                     Message message = Message.obtain();
                     message.what = CODE;
-                    message.arg1 = time - INTEVAL_TIME;
+                    message.arg1 = time - INTERVAL_TIME;
 
                     if (time > 0) {
-                        sendMessageDelayed(message, INTEVAL_TIME);
+                        sendMessageDelayed(message, INTERVAL_TIME);
                     } else {
-                        //todo：跳转到下一页
+                        BookListActivity.startActivity(activity);
+                        activity.finish();
                     }
                 }
             }
         }
     }
+
 
 }
