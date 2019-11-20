@@ -1,4 +1,4 @@
-package com.hjy.bookproject;
+package com.hjy.bookproject.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.hjy.bookproject.R;
 
 import java.lang.ref.WeakReference;
 
@@ -42,24 +43,20 @@ public class SplashActivity extends Activity {
 
     @OnClick(R.id.tv_time)
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_time:
-                BookListActivity.startActivity(SplashActivity.this);
-                SplashActivity.this.finish();
-                if (myHandle != null) {
-                    myHandle.removeMessages(CODE);
-                }
-                break;
-            default:
-                break;
+        if (view.getId() == R.id.tv_time) {
+            BookListActivity.startActivity(SplashActivity.this);
+            SplashActivity.this.finish();
+            if (myHandle != null) {
+                myHandle.removeMessages(CODE);
+            }
         }
     }
 
     public static class MyHandle extends Handler {
 
-        public final WeakReference<SplashActivity> mWeakReference;
+        private final WeakReference<SplashActivity> mWeakReference;
 
-        public MyHandle(SplashActivity activity) {
+        MyHandle(SplashActivity activity) {
             mWeakReference = new WeakReference<>(activity);
         }
 
@@ -89,6 +86,4 @@ public class SplashActivity extends Activity {
             }
         }
     }
-
-
 }

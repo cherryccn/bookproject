@@ -1,8 +1,10 @@
-package com.hjy.bookproject;
+package com.hjy.bookproject.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.hjy.bookproject.R;
 
 public class MainActivity extends AppCompatActivity {
 
