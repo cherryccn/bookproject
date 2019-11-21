@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hjy.bookproject.R;
 import com.hjy.bookproject.bean.BookListBean;
 import com.hjy.bookproject.net.Api;
+import com.hjy.bookproject.ui.BookActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 
@@ -61,8 +62,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookLi
 
             //获取文件名称
             String fileName = getFileName(dataBean.getBookname(), dataBean.getBookfile());
-            File file = new File(Api.getFileRootPath() + fileName);
+            String pathName = Api.getFileRootPath() + fileName;
+            File file = new File(pathName);
             holder.btnDownload.setText(file.exists() ? "打开" : "下载");
+
             holder.btnDownload.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -84,11 +87,12 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.BookLi
                             @Override
                             public void onProgress(long bytesWritten, long totalSize) {
                                 super.onProgress(bytesWritten, totalSize);
-                                holder.btnDownload.setText(String.valueOf(bytesWritten * 100 / totalSize) + "%");
+                                holder.btnDownload.setText(bytesWritten * 100 / totalSize + "%");
                             }
                         });
                     } else {
-                        //todo：打开书籍
+                        //打开书籍
+                        BookActivity.startActivity(mContext, pathName);
                     }
                 }
             });

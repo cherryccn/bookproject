@@ -70,7 +70,6 @@ public class BookListActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.i(TAG, "onSuccess: " + new String(responseBody));
                 String result = new String(responseBody);
                 Gson gson = new Gson();
                 BookListBean bookListBean = gson.fromJson(result, BookListBean.class);
@@ -84,8 +83,7 @@ public class BookListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Gson gson = new Gson();
-                Log.e(TAG, "onFailure: " + gson.toJson(error.getMessage()));
+                Log.e(TAG, "Cause:" + error.getCause()+"  Message:" + error.getMessage());
             }
 
             @Override

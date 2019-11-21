@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.SplashActivity">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/MyTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,6 +28,9 @@
         <activity
             android:name=".ui.BookListActivity"
             android:label="@string/book_list_name" />
+        <activity
+            android:name=".ui.BookActivity"
+            android:theme="@style/MyTheme.NoActionBar" />
     </application>
 
 </manifest>

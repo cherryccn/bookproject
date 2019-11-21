@@ -16,11 +16,6 @@ public class BaseApplication extends Application {
     }
 
     @Override
-    public Context getApplicationContext() {
-        return super.getApplicationContext();
-    }
-
-    @Override
     public void onCreate() {
         super.onCreate();
         application = this;
