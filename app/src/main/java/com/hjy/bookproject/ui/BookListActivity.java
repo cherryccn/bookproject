@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.hjy.bookproject.R;
 import com.hjy.bookproject.bean.BookListBean;
 import com.hjy.bookproject.net.Api;
+import com.hjy.bookproject.ui.adapter.BookListAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -21,12 +24,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
+import static androidx.recyclerview.widget.RecyclerView.ItemAnimator.FLAG_INVALIDATED;
+
 public class BookListActivity extends AppCompatActivity {
 
     private static final String TAG = "BookListActivity";
 
-    @BindView(R.id.rv_books)
-    RecyclerView rvBooks;
+    @BindView(R.id.recycler_books)
+    RecyclerView recyclerBooks;
+
+    private Context mContext;
+    private BookListAdapter bookListAdapter;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BookListActivity.class);
@@ -38,10 +46,19 @@ public class BookListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
         ButterKnife.bind(this);
-        initData();
+        mContext = BookListActivity.this;
+        initView();
+        loadData();
     }
 
-    private void initData() {
+    private void initView() {
+        recyclerBooks.setLayoutManager(new LinearLayoutManager(mContext));
+        bookListAdapter = new BookListAdapter(mContext);
+        recyclerBooks.setAdapter(bookListAdapter);
+        recyclerBooks.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    private void loadData() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(Api.getBookLists(), new AsyncHttpResponseHandler() {
 
@@ -57,12 +74,18 @@ public class BookListActivity extends AppCompatActivity {
                 String result = new String(responseBody);
                 Gson gson = new Gson();
                 BookListBean bookListBean = gson.fromJson(result, BookListBean.class);
-                List<BookListBean.DataBean> dataBeans = bookListBean.getData();
+                if (bookListBean != null) {
+                    List<BookListBean.DataBean> dataBeans = bookListBean.getData();
+                    if (dataBeans != null && dataBeans.size() > 0 && bookListAdapter != null) {
+                        bookListAdapter.setDataSource(dataBeans);
+                    }
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                Gson gson = new Gson();
+                Log.e(TAG, "onFailure: " + gson.toJson(error.getMessage()));
             }
 
             @Override

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BookProject</string>
     <string name="book_list_name">书籍列表</string>
+    <string name="btn_down_load">下载</string>
 </resources>
