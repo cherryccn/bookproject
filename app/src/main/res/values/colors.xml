@@ -7,4 +7,5 @@
 
     <!--自定义颜色-->
     <color name="color_FFFFFF">#FFFFFF</color>
+    <color name="color_888888">#888888</color>
 </resources>

@@ -7,6 +7,8 @@ import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 
+import com.hjy.bookproject.utils.SPUtils;
+
 public class BaseApplication extends Application {
 
     private static Application application;
@@ -19,6 +21,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+        SPUtils.createPref(this, "Book");
     }
 
     @Override

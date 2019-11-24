@@ -14,10 +14,36 @@
             android:id="@+id/tv_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
-            android:textSize="20sp"/>
+            android:layout_centerInParent="true"
+            android:textSize="20sp" />
 
+        <RelativeLayout
+            android:id="@+id/rl_setting_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="48dp"
+            android:alpha="0.5"
+            android:background="@color/color_888888"
+            android:visibility="gone">
+
+            <SeekBar
+                android:id="@+id/seekbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/recycler_setting"
+                android:layout_centerHorizontal="true"
+                android:max="100"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_setting"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+        </RelativeLayout>
 
     </com.hjy.bookproject.view.BookPageView>
 </LinearLayout>
